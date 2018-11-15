@@ -1,0 +1,40 @@
+<h1>
+	Bun Huggers Best Burgers</h1>
+<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQoe8AOlm8zPYr6_FaYf8IIGQ6KrV6uCj_oEHYunPv_ZUR_uxl5" alt="burger">
+
+<h2>Burger to Devour</h2>
+
+<ul>
+	{{#each burgers}} {{> burger}} {{/each}}
+</ul>
+
+<form id="add-burger">
+	<div class="form-group">
+		<label for="ca">Burger Name:</label>
+		<input type="text" id="ca" name="name">
+	</div>
+
+	<button type="submit">Add Hug</button>
+</form>
+<script>
+	$("#add-burger").on("submit", function (e) {
+		e.preventDefault();
+		$.post("/api/burgers", { burger_name: $("#ca").val(), devour: false }, function (data) {
+			window.location.reload();
+		});
+	});
+
+	$(".delete-burger").click(function () {
+		var id = ($(this).data().id)
+		$.ajax({
+			url: '/api/bugers/' + id,
+			type: 'DELETE'
+		})
+		.then(function(){
+			window.location.reload();
+		})
+	});
+
+
+
+</script>
